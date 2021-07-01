@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
+const mongoDbStore = require('connect-mongodb-session')(session);
 const authorized = require('./routes/authorized');
 const unauthorized = require('./routes/unauthorized');
 const db = require('./config/keys').mongoURI;
@@ -13,12 +14,18 @@ mongoose
   .then(()=>console.log('MongoDB Connected'))
   .catch(err=> console.log(err));
 const port = process.env.PORT||3000;
+const store = new mongoDbStore({
+  uri:db,
+  collection:'sessions'
+})
 app.set('view engine','ejs');
 app.use(session({
   secret :'qwert',
-  resave:true,
-  saveUninitialized:true,
+  resave:false,  
+  saveUninitialized:false,
+  store:store
 }));
+
 app.use(bodyParser.urlencoded({urlencoded:false}));
 app.use(express.static(path.join(path.dirname(process.mainModule.filename),"/public/")));
 app.use('/authorized',authorized);
