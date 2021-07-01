@@ -12,7 +12,7 @@ exports.getHome=(req,res,next)=>{
    user.findOne({email:email})
    .then(u=>{
       req.session.name = u.fname+' '+ u.lname;
-      req.session.ID = u.id;
+      
    })
    .catch(err=>{
       console.log(err);

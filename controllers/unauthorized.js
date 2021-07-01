@@ -59,6 +59,7 @@ exports.postLogin=(req,res,next)=>{
         {
             
             req.session.loggedin = true;
+            req.session.ID =u.id;
             req.session.email = email;
             res.setHeader("Cache-control", "no-store, must-revalidate, private,no-cache");
       res.setHeader("Pragma", "no-cache");
