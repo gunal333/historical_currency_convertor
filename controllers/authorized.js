@@ -9,14 +9,7 @@ exports.getHome=(req,res,next)=>{
    }
    else{
    const email = req.session.email;
-   user.findOne({email:email})
-   .then(u=>{
-      req.session.name = u.fname+' '+ u.lname;
-      
-   })
-   .catch(err=>{
-      console.log(err);
-   })
+   
    const date = new Date().toISOString().slice(0,10);
    const formatedDate=date.slice(8,10)+'-'+date.slice(5,7)+'-'+date.slice(0,4)
    const from = 'USD';
