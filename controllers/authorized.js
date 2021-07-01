@@ -24,10 +24,10 @@ exports.getHome=(req,res,next)=>{
    const amt =1;
    const name =req.session.name;
    var fdt = new Date(date.slice(0,4),date.slice(5,7)-1,date.slice(8,10));
-   fdt.setDate(fdt.getDate() - 2 );
+   fdt.setDate(fdt.getDate() - 3 );
     const fromDate = new Date(fdt).toISOString().slice(0, 10);
     var tdt = new Date(date.slice(0,4),date.slice(5,7)-1,date.slice(8,10));
-    tdt.setDate(tdt.getDate() + 4 );
+    tdt.setDate(tdt.getDate() + 3 );
     const toDate = new Date(tdt).toISOString().slice(0,10);
    request({
        url:'https://api.exchangerate.host/timeseries?start_date='+fromDate+'&end_date='+toDate+'&base='+from+'&symbols='+to+'&amount='+amt,
@@ -75,10 +75,10 @@ exports.postHome=(req,res,next)=>{
    const date = req.body['date'];
    const formatedDate=date.slice(8,10)+'-'+date.slice(5,7)+'-'+date.slice(0,4);
    var fdt = new Date(date.slice(0,4),date.slice(5,7)-1,date.slice(8,10));
-   fdt.setDate(fdt.getDate() - 2 );
+   fdt.setDate(fdt.getDate() - 3 );
     const fromDate = new Date(fdt).toISOString().slice(0, 10);
     var tdt = new Date(date.slice(0,4),date.slice(5,7)-1,date.slice(8,10));
-    tdt.setDate(tdt.getDate() + 4 );
+    tdt.setDate(tdt.getDate() + 3 );
     const toDate = new Date(tdt).toISOString().slice(0,10);
    request({
        url:'https://api.exchangerate.host/timeseries?start_date='+fromDate+'&end_date='+toDate+'&base='+from+'&symbols='+to+'&amount='+amt,
@@ -159,10 +159,10 @@ exports.searches = (req,res,next)=>{
    const date = req.body['date'];
    const formatedDate=date.slice(8,10)+'-'+date.slice(5,7)+'-'+date.slice(0,4);
    var fdt = new Date(date.slice(0,4),date.slice(5,7)-1,date.slice(8,10));
-   fdt.setDate(fdt.getDate() - 2 );
+   fdt.setDate(fdt.getDate() - 3 );
     const fromDate = new Date(fdt).toISOString().slice(0, 10);
     var tdt = new Date(date.slice(0,4),date.slice(5,7)-1,date.slice(8,10));
-    tdt.setDate(tdt.getDate() + 4 );
+    tdt.setDate(tdt.getDate() + 3 );
     const toDate = new Date(tdt).toISOString().slice(0,10);
    const search = new savedSearches(
       {
