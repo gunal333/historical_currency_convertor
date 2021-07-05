@@ -5,7 +5,7 @@
     <%- include('../includes/nav.ejs')%>
     <%if(accountCreated){%>
       <div class="d-flex justify-content-center align-items-center">
-      <div id="accountAlert" class="text-center w-25 p-3 alert alert-success alert-dismissible fade show" role="alert">
+      <div id="accountAlert" class="text-center alert alert-success alert-dismissible fade show" role="alert">
           <strong>Account Created!</strong>
           <button type="button" id="accountClose" class="btn-close" aria-label="Close"></button>
       </div>
@@ -13,7 +13,7 @@
       <%}%>
       <%if(accountLogout){%>
         <div class="d-flex justify-content-center align-items-center">
-        <div id="accountAlert" class="text-center w-25 p-3 alert alert-success alert-dismissible fade show" role="alert">
+        <div id="accountAlert" class="text-center alert alert-success alert-dismissible fade show" role="alert">
             <strong>User successfully logged out!</strong>
             <button type="button" id="accountClose" class="btn-close" aria-label="Close"></button>
         </div>
