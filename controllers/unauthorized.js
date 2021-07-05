@@ -1,7 +1,6 @@
 const { json } = require('body-parser');
 const request = require('request');
 const user = require('../models/User');
-
 exports.postSignUp=(req,res,next)=>{
     const fname = req.body['fName'];
     const lname = req.body['lName'];
@@ -19,7 +18,7 @@ exports.postSignUp=(req,res,next)=>{
     User
     .save()  
     .then(result =>{console.log('Account created');
-        res.redirect('/login/true')})
+        res.redirect('/login/user?signup=true&logout=false')})
     .catch(err=>{
         if(err.code === 11000)
         {
@@ -37,14 +36,26 @@ exports.getLogin=(req,res,next)=>{
     {
         return res.redirect('/authorized/logout');
     }
-    res.render('unauthorized/login',{title:'Login',accountCreated:false,userType:'unauthorized',isAuthenticated:'false'});
+    res.render('unauthorized/login',{title:'Login',accountLogout:false,accountCreated:false,userType:'unauthorized',isAuthenticated:'false'});
 }
-exports.accLogin=(req,res,next)=>{
+exports.accActivity=(req,res,next)=>{
     if(req.session.loggedin)
     {
         return res.redirect('/authorized/logout');
     }
-    res.render('unauthorized/login',{title:'Login',accountCreated:true,userType:'unauthorized',isAuthenticated:'false'});
+    const loggedOut = req.query.logout;
+    const accCreated = req.query.signup;
+    if(loggedOut==='true')
+    {
+        res.render('unauthorized/login',{title:'Login',accountLogout:true,accountCreated:false,userType:'unauthorized',isAuthenticated:'false'});
+    }
+    if(accCreated==='true')
+    {
+    res.render('unauthorized/login',{title:'Login',accountLogout:false,accountCreated:true,userType:'unauthorized',isAuthenticated:'false'});
+    }
+}
+exports.accLogout=(req,res,next)=>{
+    
 }
 exports.postLogin=(req,res,next)=>{
     const email = req.body['email'];
@@ -53,7 +64,7 @@ exports.postLogin=(req,res,next)=>{
     .then(u=>{
         if(u == null)
         {
-            res.render('unauthorized/login',{title:'Login',accountCreated:false,userType:'unauthorized',isAuthenticated:'true'});
+            res.render('unauthorized/login',{title:'Login',accountLogout:false,accountCreated:false,userType:'unauthorized',isAuthenticated:'true'});
         }
         else
         {
@@ -61,7 +72,7 @@ exports.postLogin=(req,res,next)=>{
             req.session.loggedin = true;
             req.session.ID =u.id;
             req.session.email = email;
-            req.session.name = u.fname+''+u.lname;
+            req.session.name = u.fname.toUpperCase()+''+u.lname.toUpperCase();
             res.setHeader("Cache-control", "no-store, must-revalidate, private,no-cache");
       res.setHeader("Pragma", "no-cache");
       res.setHeader("Expires", "0");
@@ -97,8 +108,8 @@ exports.getHome=(req,res,next)=>{
       }
       );
       const getData = (cb)=>{
-        const data =[];
         const formatedDate=date.slice(8,10)+'-'+date.slice(5,7)+'-'+date.slice(0,4);
+        const data=[];
         data.push(date);
         data.push(from);
         data.push(to);
@@ -117,11 +128,10 @@ exports.getHome=(req,res,next)=>{
         data.push(dates);
         data.push(rates);
         data.push(cb.rates[date][to]);
-    
-        res.render('home',{title:'Home',userType:'unauthorized',from:data[1],to:data[2],froVal:data[3],toVal:data[6],date:data[0],formatedDate:formatedDate,rates:data[5],dates:data[4]});
-    
+        data.push(formatedDate);
+        res.render('home',{title:'Home',userType:'unauthorized',from:data[1],to:data[2],froVal:data[3],toVal:data[6],date:data[0],formatedDate:data[7],rates:data[5],dates:data[4]});
         }
-}
+    }
 exports.postHome=(req,res,next)=>{
     const from =req.body['from'];
     const to = req.body['to'];

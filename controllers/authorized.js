@@ -114,7 +114,7 @@ exports.logout=(req,res,next)=>{
       {
        console.log(err);
       }
-      res.redirect('/');
+      res.redirect('/login/user?signup=false&logout=true');
    });
    }
    else{

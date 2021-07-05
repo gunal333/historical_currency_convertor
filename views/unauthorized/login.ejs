@@ -11,6 +11,14 @@
       </div>
       </div>
       <%}%>
+      <%if(accountLogout){%>
+        <div class="d-flex justify-content-center align-items-center">
+        <div id="accountAlert" class="text-center w-25 p-3 alert alert-success alert-dismissible fade show" role="alert">
+            <strong>User successfully logged out!</strong>
+            <button type="button" id="accountClose" class="btn-close" aria-label="Close"></button>
+        </div>
+        </div>
+        <%}%>
     <main class="form-signin mt-5 text-center container border border-5 col-lg-5">
       <form method="POST" action="/login">
         <h1 class="h3 mb-3 mt-3 fw-normal">Login</h1>
